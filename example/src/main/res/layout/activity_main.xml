@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvFingerprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/biometricprompt_color_primary"
-        android:padding="10dp"
-        android:text="@string/fingerprint_recognition"
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="生物识别"
         android:textColor="@color/biometricprompt_color_ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnFingerprint"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="指纹识别 Demo"
+        android:textAllCaps="false"
+        android:textColor="@color/biometricprompt_color_333333"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <Button
+        android:id="@+id/btnFace"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="面部识别 Demo"
+        android:textAllCaps="false"
+        android:textColor="@color/biometricprompt_color_333333"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/btnFingerprint" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

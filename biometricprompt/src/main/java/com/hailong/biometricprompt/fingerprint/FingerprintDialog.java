@@ -1,7 +1,6 @@
 package com.hailong.biometricprompt.fingerprint;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.hailong.biometricprompt.R;
 import com.hailong.biometricprompt.fingerprint.bean.VerificationDialogStyleBean;
