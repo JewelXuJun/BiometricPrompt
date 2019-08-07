@@ -8,8 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/biometricprompt" />
-            <option value="$PROJECT_DIR$/example" />
+            <option value="$PROJECT_DIR$/ArcFaceExample" />
+            <option value="$PROJECT_DIR$/FingerprintExample" />
+            <option value="$PROJECT_DIR$/arcface" />
+            <option value="$PROJECT_DIR$/fingerprint" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

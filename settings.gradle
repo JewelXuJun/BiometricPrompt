@@ -1,1 +1,1 @@
-include ':example', ':biometricprompt'
+include ':arcface', ':ArcFaceExample', ':fingerprint', ':FingerprintExample'

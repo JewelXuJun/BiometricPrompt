@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion rootProject.ext.versions.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.hailong.biometrics.arcface.example"
+        minSdkVersion rootProject.ext.versions.minSdkVersion
+        targetSdkVersion rootProject.ext.versions.targetSdkVersion
+        versionCode rootProject.ext.versions.arcFaceVersionCode
+        versionName rootProject.ext.versions.arcFaceVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    greendao {
+        schemaVersion 1 //数据库版本号，数据库升级可配置
+        daoPackage 'com.hailong.biometrics.arcface.example.db.greenDao.db'
+        // 设置DaoMaster、DaoSession、Dao 包名
+        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+        generateTests false //设置为true以自动生成单元测试。
+        targetGenDirTests 'src/main/java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["junit"]
+    implementation rootProject.ext.dependencies["runner"]
+    implementation rootProject.ext.dependencies["espresso_core"]
+    implementation rootProject.ext.dependencies["constraintlayout"]
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
+
+    api project(':arcface')
+//    api rootProject.ext.dependencies["biometricprompt"]
+
+    implementation "com.github.ZuoHailong:BaseLib:0.0.8"
+    implementation 'com.yanzhenjie.permission:x:2.0.1'
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.github.HuanTanSheng:EasyPhotos:2.4.9'
+    implementation 'top.zibin:Luban:1.1.8'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'org.greenrobot:greendao:3.2.2'
+}
