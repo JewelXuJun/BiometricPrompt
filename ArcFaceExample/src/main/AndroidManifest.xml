@@ -30,6 +30,9 @@
             android:name=".ImageModeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".VideoModeActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

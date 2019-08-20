@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.arcsoft.face.ErrorInfo;
 import com.blankj.utilcode.util.ActivityUtils;
-import com.drumbeat.baselib.base.BaseActivity;
+import com.drumbeat.baselib.base.activity.BaseActivity;
 import com.hailong.biometrics.arcface.callback.FaceCallback;
 import com.hailong.biometrics.arcface.FaceHelper;
 import com.yanzhenjie.permission.Action;
@@ -75,6 +75,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(ImageModeActivity.class);
                 break;
             case R.id.btnVideo:
+                startActivity(VideoModeActivity.class);
                 break;
         }
     }

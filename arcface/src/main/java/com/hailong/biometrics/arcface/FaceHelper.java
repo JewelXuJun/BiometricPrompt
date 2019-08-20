@@ -110,7 +110,7 @@ public class FaceHelper {
     }
 
     /**
-     * 对人脸进行检测
+     * 对人脸图片进行检测
      *
      * @param mBitmap  传入的人脸图片
      * @param callback 人脸检测回调
@@ -146,14 +146,72 @@ public class FaceHelper {
             return;
         }
 
+        // 开始检测
+        detectFace(bgr24, width, height, FaceEngine.CP_PAF_BGR24, callback);
+
+    }
+
+    /**
+     * 对人脸的视频流进行检测（相机预览等）
+     *
+     * @param data     人脸的视频流
+     * @param width    预览视图宽
+     * @param height   预览视图高
+     * @param callback 检测回调
+     */
+    public void detectFace(byte[] data, int width, int height, FaceDetectCallback callback) {
+
+        // 没有init或者init失败
+        if (faceEngine == null) {
+            callback.onFail(ErrorInfo.MERR_BAD_STATE);
+            return;
+        }
+
+        // 开始检测
+        detectFace(data, width, height, FaceEngine.CP_PAF_NV21, callback);
+
+    }
+
+    /**
+     * 比对人脸相似度
+     *
+     * @param first    first FaceFeature
+     * @param second   second FaceFeature
+     * @param callback
+     */
+    public void compareFace(FaceFeature first, FaceFeature second, FaceCompareCallback callback) {
+        // 没有init或者init失败
+        if (faceEngine == null) {
+            callback.onFail(ErrorInfo.MERR_BAD_STATE);
+            return;
+        }
+        FaceSimilar faceSimilar = new FaceSimilar();
+        int compareResult = faceEngine.compareFaceFeature(first, second, faceSimilar);
+        if (compareResult == ErrorInfo.MOK) {
+            callback.onSuccess(faceSimilar.getScore());
+        } else {
+            callback.onFail(compareResult);
+        }
+    }
+
+    /**
+     * 销毁人脸引擎
+     */
+    public void uninitFaceEngine() {
+        if (faceEngine != null) {
+            faceEngine.unInit();
+            faceEngine = null;
+        }
+    }
+
+    private void detectFace(byte[] data, int width, int height, int format, FaceDetectCallback callback) {
         /*
          * 1、检测是否存在人脸
          * */
-
         // 检测到的人脸列表
         List<FaceInfo> faceInfoList = new ArrayList<>();
         // 开始检测
-        int detectFacesResult = faceEngine.detectFaces(bgr24, width, height, FaceEngine.CP_PAF_BGR24, faceInfoList);
+        int detectFacesResult = faceEngine.detectFaces(data, width, height, format, faceInfoList);
         // 检测异常
         if (detectFacesResult != ErrorInfo.MOK) {
             callback.onFail(detectFacesResult);
@@ -175,7 +233,7 @@ public class FaceHelper {
         List<Face3DAngle> face3DAngleList = new ArrayList<>();
 
         // 2.1 process
-        int processResult = faceEngine.process(bgr24, width, height, FaceEngine.CP_PAF_BGR24, faceInfoList, ASF_AGE | ASF_GENDER | ASF_FACE3DANGLE | ASF_LIVENESS);
+        int processResult = faceEngine.process(data, width, height, format, faceInfoList, ASF_AGE | ASF_GENDER | ASF_FACE3DANGLE | ASF_LIVENESS);
         if (processResult != ErrorInfo.MOK) {
             callback.onFail(detectFacesResult);
             return;
@@ -213,7 +271,7 @@ public class FaceHelper {
         for (int i = 0; i < faceInfoList.size(); i++) {
             FaceInfo faceInfo = faceInfoList.get(i);
             FaceFeature faceFeature = new FaceFeature();
-            faceEngine.extractFaceFeature(bgr24, width, height, FaceEngine.CP_PAF_BGR24, faceInfo, faceFeature);
+            faceEngine.extractFaceFeature(data, width, height, format, faceInfo, faceFeature);
             // 将人脸特征数据和年龄、性别等信息储存起来
             FaceDetectResultBean detectResultBean = new FaceDetectResultBean();
             detectResultBean.setFaceFeature(faceFeature);
@@ -228,39 +286,6 @@ public class FaceHelper {
         }
 
         callback.onSuccess(faceDetectResultBeans);
-
-    }
-
-    /**
-     * 比对人脸相似度
-     *
-     * @param first    first FaceFeature
-     * @param second   second FaceFeature
-     * @param callback
-     */
-    public void compareFace(FaceFeature first, FaceFeature second, FaceCompareCallback callback) {
-        // 没有init或者init失败
-        if (faceEngine == null) {
-            callback.onFail(ErrorInfo.MERR_BAD_STATE);
-            return;
-        }
-        FaceSimilar faceSimilar = new FaceSimilar();
-        int compareResult = faceEngine.compareFaceFeature(first, second, faceSimilar);
-        if (compareResult == ErrorInfo.MOK) {
-            callback.onSuccess(faceSimilar.getScore());
-        } else {
-            callback.onFail(compareResult);
-        }
-    }
-
-    /**
-     * 销毁人脸引擎
-     */
-    public void uninitFaceEngine() {
-        if (faceEngine != null) {
-            faceEngine.unInit();
-            faceEngine = null;
-        }
     }
 
 }

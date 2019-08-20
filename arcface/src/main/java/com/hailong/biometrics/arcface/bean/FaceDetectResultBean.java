@@ -148,7 +148,7 @@ public class FaceDetectResultBean {
             }
             stringBuilder.append(face3DAngle.getPitch() + "\n");
             //翻滚角，机身左下压/右下压
-            stringBuilder.append("翻滚角（机身左下压/右下压）：");
+            stringBuilder.append("翻滚角（机身左侧下压/右侧下压）：");
             if (face3DAngle.getRoll() == 0) {
                 stringBuilder.append("正脸 ");
             } else if (face3DAngle.getRoll() > 0) {

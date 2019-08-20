@@ -19,7 +19,7 @@ import com.arcsoft.face.FaceFeature;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.bumptech.glide.Glide;
-import com.drumbeat.baselib.base.BaseActivity;
+import com.drumbeat.baselib.base.activity.BaseActivity;
 import com.hailong.biometrics.arcface.FaceHelper;
 import com.hailong.biometrics.arcface.bean.FaceDetectResultBean;
 import com.hailong.biometrics.arcface.callback.FaceCallback;
