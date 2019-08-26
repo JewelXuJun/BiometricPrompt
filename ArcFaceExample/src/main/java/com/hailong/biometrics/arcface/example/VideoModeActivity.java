@@ -1,8 +1,6 @@
 package com.hailong.biometrics.arcface.example;
 
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -15,15 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.arcsoft.face.AgeInfo;
-import com.arcsoft.face.ErrorInfo;
-import com.arcsoft.face.Face3DAngle;
 import com.arcsoft.face.FaceEngine;
-import com.arcsoft.face.FaceFeature;
-import com.arcsoft.face.FaceInfo;
-import com.arcsoft.face.GenderInfo;
-import com.arcsoft.face.LivenessInfo;
-import com.blankj.utilcode.util.ActivityUtils;
 import com.drumbeat.baselib.base.activity.BaseActivity;
 import com.hailong.biometrics.arcface.FaceHelper;
 import com.hailong.biometrics.arcface.bean.FaceDetectResultBean;
@@ -34,7 +24,6 @@ import com.hailong.biometrics.arcface.example.utils.camera.CameraListener;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,10 +31,6 @@ import butterknife.ButterKnife;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_PHONE_STATE;
-import static com.arcsoft.face.FaceEngine.ASF_AGE;
-import static com.arcsoft.face.FaceEngine.ASF_FACE3DANGLE;
-import static com.arcsoft.face.FaceEngine.ASF_GENDER;
-import static com.arcsoft.face.FaceEngine.ASF_LIVENESS;
 
 /**
  * Created by ZuoHailong on 2019-08-20
@@ -83,6 +68,16 @@ public class VideoModeActivity extends BaseActivity implements ViewTreeObserver.
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FaceHelper.newInstance().uninitFaceEngine();
+        if (cameraHelper != null) {
+            cameraHelper.release();
+            cameraHelper = null;
+        }
     }
 
     // 相机预览视图可见
@@ -131,7 +126,7 @@ public class VideoModeActivity extends BaseActivity implements ViewTreeObserver.
 
     // 初始化虹软人脸引擎
     private void initFaceEngine() {
-        FaceHelper.newInstance().initFaceEngineImage(getContext(), new FaceCallback() {
+        FaceHelper.newInstance().initFaceEngineVideo(getContext(), new FaceCallback() {
             @Override
             public void onSuccess() {
                 showToastShort("人脸引擎初始化成功");

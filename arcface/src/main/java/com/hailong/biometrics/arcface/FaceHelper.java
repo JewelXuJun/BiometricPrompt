@@ -27,6 +27,8 @@ import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static com.arcsoft.face.FaceEngine.ASF_AGE;
 import static com.arcsoft.face.FaceEngine.ASF_FACE3DANGLE;
+import static com.arcsoft.face.FaceEngine.ASF_FACE_DETECT;
+import static com.arcsoft.face.FaceEngine.ASF_FACE_RECOGNITION;
 import static com.arcsoft.face.FaceEngine.ASF_GENDER;
 import static com.arcsoft.face.FaceEngine.ASF_LIVENESS;
 
@@ -110,6 +112,39 @@ public class FaceHelper {
     }
 
     /**
+     * 初始化人脸引擎
+     *
+     * @return
+     */
+    public void initFaceEngineVideo(Context context, FaceCallback callback) {
+        initFaceEngineVideo(context, FaceEngine.ASF_OP_0_HIGHER_EXT, 16, 10, callback);
+    }
+
+    /**
+     * 初始化人脸引擎
+     *
+     * @return
+     */
+    public void initFaceEngineVideo(Context context, int detectFaceOrientPriority, int detectFaceScaleVal, int detectFaceMaxNum, FaceCallback callback) {
+        /*
+         * 初始化人脸引擎
+         * 参数2：检测模式，这里指定为视频模式
+         * 参数3：人脸检测角度，这里指定为全角度
+         * 参数4：识别的最小人脸比例（图片长边与人脸框长边的比值），VIDEO模式推荐值是16
+         * 参数5：最多检测出人脸的数量 1~50
+         * 参数6：启动的检测组合，如检测、识别、年龄、三维信息等
+         *
+         * */
+        int initResult = faceEngine.init(context, FaceEngine.ASF_DETECT_MODE_VIDEO, detectFaceOrientPriority,
+                detectFaceScaleVal, detectFaceMaxNum, ASF_FACE_RECOGNITION | ASF_FACE_DETECT | ASF_AGE | ASF_GENDER | ASF_FACE3DANGLE | ASF_LIVENESS);
+        if (initResult == ErrorInfo.MOK) {
+            callback.onSuccess();
+        } else {
+            callback.onFail(initResult);
+        }
+    }
+
+    /**
      * 对人脸图片进行检测
      *
      * @param mBitmap  传入的人脸图片
@@ -169,7 +204,6 @@ public class FaceHelper {
 
         // 开始检测
         detectFace(data, width, height, FaceEngine.CP_PAF_NV21, callback);
-
     }
 
     /**

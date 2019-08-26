@@ -6,15 +6,13 @@
     <TextureView
         android:id="@+id/textureView"
         android:layout_width="match_parent"
-        android:layout_height="410dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginRight="50dp" />
+        android:layout_height="match_parent" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/bg_face_prompt" />
+        android:src="@mipmap/bg_face_prompt"
+        android:visibility="gone" />
 
     <!--显示脸部检测结果信息-->
     <TextView
